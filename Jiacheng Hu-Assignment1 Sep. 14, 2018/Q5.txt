@@ -1,0 +1,77 @@
+Problem: Design a job searching and posting platform
+
+Objects: 
+    Employer:
+        Data: Name, Degree, Resume, Address, Phone
+        Behavior: SendResume, ReceiveMessage, Interview
+
+    Employee: 
+        Data: Name, Title, Company, Address, Phone
+        Behavior: ReceiveMessage, ReceiveResume, FilterResume, ArrangeInterview, MakeDecision
+
+    Job:
+        Data: Position, Salary, Time, Environment
+
+    Company:
+        Data: Name, Registered Capital, Legal Representative, Business Scope, Address, Phone
+        Behavior: null
+
+    Internet:
+        Data: Electronic Website
+        Behavior: searchForElectronicWebsite
+
+    ElectronicWebsite:
+        Data: URL, jobs, Account
+        Behavior: Search, Filter, Display, SendNotification, Apply
+
+Sequence of invoking behaviors on Objects:
+
+Design a job searching and posting platform:
+
+    Employer Barry,
+    Internet internet,
+    ElectronicWebsite 58,
+    Job Programmer
+    Company Alibaba,
+    Employee Mike
+
+    if Internet.isAvailable
+        Barry.searchOnElectronicWebsite -> Position, Salary, Time, Environment: Collection of Jobs;
+        if Barry.findsNoPages;
+            Break;
+        end;
+
+        Barry.findDesirableJobInAPage -> internet, PageNumber: Jobs;
+        if Barry.find DesirableJob;
+            Job = Programmer;
+            Company = Alibaba;
+            Employee = Mike;
+            Barry.ApplyJob -> Name, Degree, Resume, Address, Phone: confirm;
+            if Degree >= Master;
+                Barry.ReceiveMessage: "APPLICATION SUBMITTED, PLEASE WAITING FOR RESPONSE";
+
+                Mike.ReceiveMessage: "RECEIVE NEW APPLICATION";
+                Boolean CheckResumePass;
+                if CheckResumePass = true;
+                    Mike.GiveInterview -> Time, Location: Send;
+                    Barry.ReceiveMessage: "YOUR INTERVIEW IS IN" + Time + Location;
+
+                    Boolean InterviewPass;
+                    if InterviewPass = true;
+                        Mike.acceptInterviewer -> ConfirmPass: SendInvitation;
+                        Barry.receiveMessage: "CONGRATULATIONS, PLEASE RECEIVE THE INVITATION!"
+                    else;
+                        Mike.denyInterviewer -> ConfirmDenied: SendNotification;
+                        Barry.receiveMessage: "SORRY FOR YOUR FAILED!";
+                else;
+                    Mike.RefuseInterview -> Denied: SendNotification;
+                    Barry.receiveMessage: "YOUR APPLICATION HAS BEEN DENIED";
+            else;
+                Barry.receiveMessage: "UNQUALIFIED";
+        else;
+            PageNumber = PageNumber + 1;
+    else;
+        Barry.checkNetwork;
+
+
+            

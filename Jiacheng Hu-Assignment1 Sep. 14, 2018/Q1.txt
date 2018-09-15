@@ -1,0 +1,63 @@
+Problem : Order a hotel online before a trip
+
+object & behaviors: 
+
+Consumer: 
+    Data: name, Phone, Address, Email
+    Behaviors: search, review, compare, order, return, cancel
+
+Internet:
+    Data: Collection_of_Airbnb, Qunar, Ctrip, elong
+    Behaviors: Search_For_Electronic_Websites
+
+ElectronicWebsites: 
+    Data: URL, hotel, bank_account
+    Behaviors: search, recommend, send_notification, confirm_location, sort, compare, order
+
+Hotel:
+    Data: price, location, star, roomtype
+    Behaviors: null
+
+CreditCard: 
+    Data: Card_Number, name, company, expiration, securitycode
+    Behaviors: null
+
+CreditCardCompany: 
+    Data: name
+    Behaviors: authorize transaction
+
+Sequence of invoking behaviors on Objects: 
+
+    Consumer Barry,
+    Internet internet,
+    ElectronicWebsite Airbnb,
+    Hotel Marriott,
+    CreditCard creditcard,
+    CreditCardCompany Visa,
+    OrderingConfirmation response
+
+    If Internet is  available
+        Barry.SearchOnTheInternet -> internet, question: Collection of ElectronicWebsite -> Collection of Websites : website pageNumber = 1;
+        if Barry.findsNoPages
+            break
+            Barry.findDesirableWebsiteInAPage -> internet, question, pageNumber: Website
+            website = Airbnb;
+            if Airbnb is not empty
+                break
+            else
+                pageNumber = pageNumber + 1
+            
+        
+                website = Airbnb
+                if Airbnb != null
+                    Airbnb.SearchForHotel -> price, location, star, roomtype, check-in time, check-out time: Collection of Hotel
+                    Hotel = Marriott
+                    Barry.OrderHotel -> Marriott, CreditCard, Airbnb: OrderingConfirmation
+                    response = OrderingConfirmation
+                else 
+                    Barry.CannotOrderHotel
+
+
+            
+    else
+        Barry.checkNetwork

@@ -1,0 +1,85 @@
+Problem: A Course Registration Platform
+
+Objects: 
+
+    Student: 
+        Data: Name, Student_ID, Password, Department, Class & Grade, Score, Classroom_Behavior, Class_Schedule, Course_Status, Phone, Email
+        Behavior: Register, Attend_Class, Ask_Question, Finish_Homework, Attend_Exam
+
+    Professor: 
+        Data: Name, Department, Research_Direction, Academic_History, Teach_Course, Office, Available for Students, Phone, Email
+        Behavior: Give_Lecture, Answer_Question, Record_Classroom_Behavior, Assign_Homework, Set_Paper, Give_Score
+
+    Course:
+        Data: Name, ID, Credit, Time, Place
+        Behavior: Null
+    
+    Internet:
+        Data: Registration_Platform
+        Behavior: Search_Registration_Platform
+
+    Registration_Platform: 
+        Data: URL, courses, Account
+        Behavior: Search, Classify, Register, Notify, Start_Payment
+    
+    CreditCard: 
+        Data: Number, Name, Company, Expiration, Security_Code
+        Behavior: Null
+    
+    CreditCard_Company: 
+        Data: Name
+        Behavior: Transaction_Confirm
+
+    Sequence of Invoking Behaviors on Objects:
+
+    Design a Course Registration Platform:
+
+    Student Barry,
+    Internet internet,
+    Registration_Platform registration platform,
+    Course Application Engineering and Development,
+    Professor Siva,
+    CreditCard creditcard,
+    Creditcard_Company Visa
+    Payment Confirmation Response
+
+
+    if Internet.isAvailable, 
+        Barry.EnterRegistrationPlatform
+
+        Boolean ID;
+        Boolean Password;
+
+        if ID, Password = true;
+            Barry.Login -> ID, Password: "Access Approved";
+
+            Barry.SearchforCourse -> ID, major, Class & Grade, term: Collection of Courses, PageNumber = 1;
+            if Barry.findsNoPages;
+                break
+            else;
+                Barry.findDesirableCourse -> internet, PageNumber: Course;
+
+                Course = Application Engineering and Development;
+                Professor = Siva;
+
+                Barry.findDetails -> Course: Introduction, ID, Credit, Time, Place;
+                
+                Boolean Class_ScheduleContainTime; 
+                if Class_ScheduleContainTime = false; 
+                    Barry.registerCourse -> Register: "WAITING FOR CONFIRMED";
+
+                    if NumberofStudents > 3; 
+                        Siva.receiveNotification: "YOU WILL BE THE LECTURER!"
+                        if NumberofStudents < 50;
+                            Barry.receiveNotification: "REGISTRATION CONFIRMED!"
+                            Barry.payforCourse -> CreditCard, Registration_Platform: PaymentConfirmation;
+                            responses = PaymentConfirmation;
+                        else;
+                            Barry.receiveNotification: "NO AVAILABLE SEATS, REGISTRATION DENIED!";
+                    else;
+                        Siva.receiveNotification: "THE NUMBER OF STUDENTS IS NOT ENOUGH!";
+                        Barry.receiveNotification: "NOT ENOUGH STUDENT, REGISTRATION DENIED!";
+                else;
+                    Barry.cantRegisterCourse;
+            else;
+                Barry.checkNetwork;

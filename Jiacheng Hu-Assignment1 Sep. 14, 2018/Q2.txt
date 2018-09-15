@@ -1,0 +1,99 @@
+Problem: App for Calling Uber
+
+Object: 
+
+        Passenger: 
+            Data: Name, Address, Phone, Photo
+            Behaviors: Search, Order, Cancel, ConfirmLocation, Get_on, Pay, Get_off, Remark
+
+        Internet: 
+            Data: Uber
+            Behaviors: SearchForUber
+
+        Uber:
+            Data: URL, Collection_of_Cars, Collection_of_Drivers, Bank_Account
+            Behaviors: Search, SendNotification, GetPassengersLocation, GetDriversLocation, CheckOut 
+
+        Drivers: 
+            Data: Name, Phone, ID, Address, CarNumber, CarType, Photo
+            Behaviors: ReceiveOrder, ComfirmOrder, Call, Pick_up_Passengers_Confirmation, Arrive_Destination_Confirmation, ReceivePayment
+
+        CreditCard: 
+            Data: Number, Name, Company, Expiration, SecurityNumber
+            Behaviors: Null
+
+        CreditCardCompany: 
+            Data: Name
+            Behaviors: AuthorizeTransaction
+
+Sequence of involing behaviors on Objects: 
+
+App for Calling Uber: 
+
+    Passenger Barry, 
+    Internet internet,
+    Uber Uber,
+    Drivers driver,
+    CreditCard creditcard,
+    CreditCardCompany Visa, 
+    PaymentConfirmation response 
+
+if Internet.isAvailable;
+    Barry.searchOnUber;
+    if BarrysLocationConfirmed;
+        Barry.searchCars -> Destination, CarType, Share_or_not, time: Collection_of_Cars;
+        
+        int WaitingMinute = 0;
+        while (WaitingMinute < 10);
+        if Collection_of_Cars > 0;
+            Driver.ReceiveOrder -> Accept_Order: Order_Confirmed; 
+            Driver = Mike;
+            Car_NO. = 1234567;
+            CarType = "Silver", "Toyota", "SUV";
+            Routine = routine;
+            Estimated_Time_Remain: time;
+            Barry.Receive_Notification: "THE CAR IS ON THE WAY!", Driver, Car_NO, CarType, Routine, Estimated_Time_Remain;
+            Mike.Receive_Notification: "ORDER CONFIRMED, PLEASE PICK UP THE PASSENGER SOON!", Passenger, Photo, Routine, Estimate_Time_Remain;
+                
+            if Barry.Get_on;
+                Start Accounting;
+                if Barry.Arrive;
+                    Barry.pay -> BankAccount, CreditCard: Payment_Confirmation;
+                    response: Payment_Confirmation;
+                    Break;
+                else;
+                    Barrycantpay;
+            else;
+                Keep Stop Accounting;
+        else;
+            Barry.Receive_Notification: "WE WILL ASSIGN DRIVER AS SOON AS POSSIBLE, THANK YOU FOR WAITING PATIENTLY!"；
+            WaitingMinute = WaitingMinute + 1;
+            if WaitingMinute > 10;
+                Barry.Try_Later;
+
+    else;
+        Barry.cantSearchCars;
+
+else;
+    Barry.ChecktheNetwork
+
+            
+    
+
+
+            
+                        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                                
+
+
+

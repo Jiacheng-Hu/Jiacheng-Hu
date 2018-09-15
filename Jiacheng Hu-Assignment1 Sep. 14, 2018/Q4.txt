@@ -1,0 +1,70 @@
+Problem: Order food in a restaurant
+
+Objects: 
+
+    Consumer: 
+        Data: TableID, Phone
+        Behavior: OrderFood, ReceiveMessage
+
+    Internet: 
+        Data: ElectronicWebsite
+        Behavior: searchforElectronicWebsite
+    
+    ElectronicWebsite: 
+        Data: URL, Foods, BankAccount
+        Behavior: Display, Search, Order, SendMessage
+
+    Restaurant: 
+        Data: Name, Phone, Email, Address, Star, Remark
+        Behavior: Cook, ReceiveMessage
+
+    Food:
+        Data: Type, AvailableTime, Size
+
+    CreditCard: 
+        Data: Number, name, conpany, expiration, SecurityCode
+        Behavior: null
+
+    CreditCardCompany: 
+        Data: Name
+        Behavior: AuthorizeTransaction
+
+    Sequence of invoking on Objects: 
+
+    Order food in a restaurant: 
+
+        Consumer Barry, 
+        Internet internet,
+        ElectronicWebsite electronicwebsite,
+        Restaurant Mcdonald's
+        Food BigMac
+        CreditCard creditcard,
+        CreditCompany Visa,
+        PaymentConfirmation response
+
+    if Internet.isAvailable
+        Barry.loginWebsite -> TableID: Access Approved;
+        Barry.findFood -> Type, AvailableTime, Size: Collection of Foods;
+        if Barry.findNoPages;
+            break;
+        end;
+
+            Barry.findDesirableFoodInAPage -> internet, PageNumber: Foods; 
+            if Foods contain BigMacMeal;
+                Barry.orderBigMacMeal -> Order: "WAITING FOR CONFIRMATION";
+                Restaurant.ReceiveMessage: "NEW ORDER, PLEASE CONFIRMED";
+                if BigMac != 0; 
+                    Restaurant.Confirmed;
+                    Barry.receiveMessage: "ORDER CONFIRMED";
+                    Barry.payOrder -> myAssistant, CreditCard, ElectronicWebsite: PaymentConfirmation;
+                    response = PaymentConfirmation;
+                else;
+                    Restaurant.Denied;
+                    Barry.receiveMessage: "ORDER DENIED";
+            else;
+                PageNumber = PageNumber + 1;
+    else;
+        Barry.checkNetwork
+
+            
+                
